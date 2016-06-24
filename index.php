@@ -1,10 +1,4 @@
-<?php
-    error_reporting(E_ALL);
 
-    require_once('./config.php');
-    require_once('./database.php');
-
-?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -20,16 +14,42 @@
     </style>
 </head>
 <body>
+<?php
+error_reporting(E_ALL);
+
+require_once('./config.php');
+require_once('./database.php');
+$db = new Database();
+    // $db->add('task 1', 'text description', 0);
+    // $db->add('task 2', 'text description', 0);
+$rows = $db->select_all();
+?>
     <h1 class="ui center aligned header">
         TODO 
     </h1>
-    <div class="ui text container">
-      <div class="ui segments">
-        <div class="ui segment">Content</div>
-        <div class="ui segment">Content</div>
-        <div class="ui segment">Content</div>
-        <div class="ui segment">Content</div>
-      </div>
+    <div class="ui container">
+        <div class="ui list celled selection">
+            <?php foreach ($rows as $row): ?>
+                <div class="item">
+                    <div class="right floated content">
+                        <a href="#" class="ui icon inverted red button">
+                            <i class="trash outline icon"></i>
+                        </a>
+                        <a href="#"  class="ui icon button">
+                            <i class="edit icon"></i>
+                        </a>
+                    </div>
+
+                  <div class="content">
+                    <a href="" class="header"> <?= $row['title']; ?></a>
+                    <div class="description"><?= $row['description']; ?></div>
+                </div>
+
+            </div>
+            <!-- echo "<tr><td>".$row["id"]."</td><td>".$row["title"]." ".$row["description"]."</td></tr>"; -->
+        <?php endforeach; ?>
     </div>
+</div>
+
 </body>
 </html>
